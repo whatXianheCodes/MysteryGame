@@ -87,6 +87,6 @@ public class AuthenticationActivity extends ActionBarActivity {
         else if (!checkPassword()){
             return;
         }
-
+        //make it go to new activity
     }
 }
