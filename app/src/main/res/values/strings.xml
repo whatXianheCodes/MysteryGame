@@ -15,4 +15,10 @@
     <string name="invitation_code_title">Enter your invitation code</string>
     <string name="invitation_code_field">Invitation code</string>
     <string name="submit_text">Submit</string>
+    <string name="invalid_invitation_message">A valid invitation code is required</string>
+    <string name="invalid_name_message">A valid name is required</string>
+    <string name="invalid_email_message">A valid email is required</string>
+    <string name="invalid_password_message">A password is required</string>
+    <string name="title_activity_main_menu_actvity">Main Menu</string>
+
 </resources>

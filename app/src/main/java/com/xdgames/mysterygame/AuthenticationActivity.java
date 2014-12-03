@@ -1,12 +1,15 @@
 package com.xdgames.mysterygame;
 
+import android.content.Context;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -14,6 +17,9 @@ import java.util.regex.Pattern;
 
 public class AuthenticationActivity extends ActionBarActivity {
     private static final String TAG = "AuthenticationActivity";
+    private int toast_duration = Toast.LENGTH_SHORT;
+    private Context context = getApplicationContext();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,15 +82,27 @@ public class AuthenticationActivity extends ActionBarActivity {
 
     public void submitForm (View view) {
         if (!checkInvitation()) {
+            CharSequence text = getResources().getString(R.string.invalid_invitation_message);
+            Toast toast = Toast.makeText(context, text, toast_duration);
+            toast.show();
             return;
         }
         else if (!checkName()) {
+            CharSequence text = getResources().getString(R.string.invalid_name_message);
+            Toast toast = Toast.makeText(context, text, toast_duration);
+            toast.show();
             return;
         }
         else if (!checkEmail()) {
+            CharSequence text = getResources().getString(R.string.invalid_email_message);
+            Toast toast = Toast.makeText(context, text, toast_duration);
+            toast.show();
             return;
         }
         else if (!checkPassword()){
+            CharSequence text = getResources().getString(R.string.invalid_password_message);
+            Toast toast = Toast.makeText(context, text, toast_duration);
+            toast.show();
             return;
         }
         //make it go to new activity
