@@ -17,8 +17,6 @@ import java.util.regex.Pattern;
 
 public class AuthenticationActivity extends ActionBarActivity {
     private static final String TAG = "AuthenticationActivity";
-    private int toast_duration = Toast.LENGTH_SHORT;
-    private Context context = getApplicationContext();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,29 +78,26 @@ public class AuthenticationActivity extends ActionBarActivity {
         return (passwordValue.length()!= 0);
     }
 
+    private void displayInvalidMessageToast (String message) {
+        Toast toast = Toast.makeText(this, message, Toast.LENGTH_SHORT);
+        toast.show();
+    }
+
     public void submitForm (View view) {
         if (!checkInvitation()) {
-            CharSequence text = getResources().getString(R.string.invalid_invitation_message);
-            Toast toast = Toast.makeText(context, text, toast_duration);
-            toast.show();
+            displayInvalidMessageToast(getResources().getString(R.string.invalid_invitation_message));
             return;
         }
         else if (!checkName()) {
-            CharSequence text = getResources().getString(R.string.invalid_name_message);
-            Toast toast = Toast.makeText(context, text, toast_duration);
-            toast.show();
+            displayInvalidMessageToast(getResources().getString(R.string.invalid_name_message));
             return;
         }
         else if (!checkEmail()) {
-            CharSequence text = getResources().getString(R.string.invalid_email_message);
-            Toast toast = Toast.makeText(context, text, toast_duration);
-            toast.show();
+            displayInvalidMessageToast(getResources().getString(R.string.invalid_email_message));
             return;
         }
         else if (!checkPassword()){
-            CharSequence text = getResources().getString(R.string.invalid_password_message);
-            Toast toast = Toast.makeText(context, text, toast_duration);
-            toast.show();
+            displayInvalidMessageToast(getResources().getString(R.string.invalid_password_message));
             return;
         }
         //make it go to new activity
