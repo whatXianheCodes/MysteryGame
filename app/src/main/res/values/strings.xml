@@ -9,6 +9,7 @@
     <string name="username_title">Choose your username</string>
     <string name="username_field">Username</string>
     <string name="password_title">Enter a password</string>
+    <string name="password_confirm_title">Confirm your password</string>
     <string name="password_field">Password</string>
     <string name="email_address_title">Enter your email address</string>
     <string name="email_address_field">E-mail</string>
@@ -19,6 +20,10 @@
     <string name="invalid_name_message">A valid name is required</string>
     <string name="invalid_email_message">A valid email is required</string>
     <string name="invalid_password_message">A password is required</string>
+    <string name="invalid_password_confirm_message">Password must match</string>
+    <string name="invalid_username_message">A username is required</string>
     <string name="title_activity_main_menu_actvity">Main Menu</string>
+    <string name="title_activity_main">Main Menu</string>
+    <string name="hello_world">Hello world!</string>
 
 </resources>
