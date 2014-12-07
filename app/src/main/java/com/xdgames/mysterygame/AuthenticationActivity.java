@@ -23,9 +23,7 @@ public class AuthenticationActivity extends ActionBarActivity {
     public final static String EXTRA_LNAME = "com.xdgames.mysterygame.LNAME";
     public final static String EXTRA_EMAIL = "com.xdgames.mystergygame.EMAIL";
     public final static String EXTRA_PASSWORD = "com.xdgames.mysterygame.PASSWORD";
-
-
-
+    public final static String EXTRA_USERNAME = "com.xdgames.mysterygame.USERNAME";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -131,6 +129,7 @@ public class AuthenticationActivity extends ActionBarActivity {
         }
         Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra(EXTRA_INVITATION, securityCodeValue);
+        intent.putExtra(EXTRA_USERNAME, usernameValue);
         intent.putExtra(EXTRA_FNAME, firstNameValue);
         intent.putExtra(EXTRA_LNAME, lastNameValue);
         intent.putExtra(EXTRA_EMAIL, emailValue);
