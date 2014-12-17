@@ -19,6 +19,8 @@
             android:name="com.xdgames.mysterygame.MainActivity"
             android:label="@string/title_activity_main" >
         </activity>
-    </application>
 
+    </application>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 </manifest>

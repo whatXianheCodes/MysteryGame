@@ -12,6 +12,18 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import org.apache.http.HttpConnection;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpConnectionParams;
+import org.apache.http.params.HttpParams;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -24,7 +36,7 @@ public class AuthenticationActivity extends ActionBarActivity {
     public final static String EXTRA_EMAIL = "com.xdgames.mystergygame.EMAIL";
     public final static String EXTRA_PASSWORD = "com.xdgames.mysterygame.PASSWORD";
     public final static String EXTRA_USERNAME = "com.xdgames.mysterygame.USERNAME";
-
+    private String apiEndpoint = "http://xdgames.xianheh.com/MysteryGame";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,8 +101,8 @@ public class AuthenticationActivity extends ActionBarActivity {
     }
 
     public void submitForm (View view) {
-        EditText securityCodeView = (EditText)findViewById(R.id.invitation_code);
-        String securityCodeValue = securityCodeView.getText().toString();
+        EditText invitationCodeView = (EditText)findViewById(R.id.invitation_code);
+        String invitationCodeValue = invitationCodeView.getText().toString();
         EditText firstNameView = (EditText)findViewById(R.id.first_name);
         String firstNameValue = firstNameView.getText().toString();
         EditText lastNameView = (EditText) findViewById(R.id.last_name);
@@ -103,7 +115,7 @@ public class AuthenticationActivity extends ActionBarActivity {
         String passwordConfirmValue = passwordView.getText().toString();
         EditText usernameView = (EditText)findViewById(R.id.username);
         String usernameValue = usernameView.getText().toString();
-        if (!checkName(firstNameValue, lastNameValue)) {
+        /*if (!checkName(firstNameValue, lastNameValue)) {
             displayInvalidMessageToast(getResources().getString(R.string.invalid_name_message));
             return;
         }
@@ -123,17 +135,49 @@ public class AuthenticationActivity extends ActionBarActivity {
             displayInvalidMessageToast(getResources().getString(R.string.invalid_email_message));
             return;
         }
-        else if (!checkInvitation(securityCodeValue)) {
+        else if (!checkInvitation(invitationCodeValue)) {
             displayInvalidMessageToast(getResources().getString(R.string.invalid_invitation_message));
             return;
+        }*/
+        final JSONObject jsonRegistration = new JSONObject();
+        JSONObject jsonUser = new JSONObject();
+        try {
+            jsonUser.put("firstname", firstNameValue);
+            jsonUser.put("lastname", lastNameValue);
+            jsonUser.put("username", usernameValue);
+            jsonUser.put("password", passwordValue);
+            jsonUser.put("email", emailValue);
+            jsonUser.put("invitation_code", invitationCodeValue);
+            jsonRegistration.put("registration", jsonUser);
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
-        Intent intent = new Intent(this, MainActivity.class);
-        intent.putExtra(EXTRA_INVITATION, securityCodeValue);
-        intent.putExtra(EXTRA_USERNAME, usernameValue);
-        intent.putExtra(EXTRA_FNAME, firstNameValue);
-        intent.putExtra(EXTRA_LNAME, lastNameValue);
-        intent.putExtra(EXTRA_EMAIL, emailValue);
-        intent.putExtra(EXTRA_PASSWORD, passwordValue);
-        startActivity(intent);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                HttpPost httpPost = new HttpPost(apiEndpoint);
+                httpPost.setHeader("Content-Type", "application/json");
+                try {
+                    httpPost.setEntity(new StringEntity(jsonRegistration.toString()));
+                    HttpParams httpParams = new BasicHttpParams();
+                    HttpConnectionParams.setConnectionTimeout(httpParams, 10* 1000);
+                    HttpConnectionParams.setSoTimeout(httpParams, 10*1000);
+                    DefaultHttpClient httpClient = new DefaultHttpClient(httpParams);
+                    HttpResponse response = httpClient.execute(httpPost);
+                }
+                catch (IOException e){
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+
+//        return intent = new Intent(this, MainActivity.class);
+//        intent.putExtra(EXTRA_INVITATION, securityCodeValue);
+//        intent.putExtra(EXTRA_USERNAME, usernameValue);
+//        intent.putExtra(EXTRA_FNAME, firstNameValue);
+//        intent.putExtra(EXTRA_LNAME, lastNameValue);
+//        intent.putExtra(EXTRA_EMAIL, emailValue);
+//        intent.putExtra(EXTRA_PASSWORD, passwordValue);
+        //startActivity(intent);
     }
 }
