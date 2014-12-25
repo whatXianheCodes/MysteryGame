@@ -159,6 +159,7 @@ public class AuthenticationActivity extends ActionBarActivity {
                 httpPost.setHeader("Content-Type", "application/json");
                 try {
                     httpPost.setEntity(new StringEntity(jsonRegistration.toString()));
+                    Log.d(TAG, jsonRegistration.toString());
                     HttpParams httpParams = new BasicHttpParams();
                     HttpConnectionParams.setConnectionTimeout(httpParams, 10* 1000);
                     HttpConnectionParams.setSoTimeout(httpParams, 10*1000);
