@@ -1,4 +1,4 @@
-package com.xdgames.mysterygame;
+package com.xdgames.mysterygame.Models;
 
 /**
  * Created by Xianhe on 12/25/2014.

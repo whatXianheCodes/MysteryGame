@@ -1,32 +1,16 @@
 package com.xdgames.mysterygame;
 
-import android.content.Context;
-import android.content.Intent;
+
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import org.apache.http.HttpConnection;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.params.BasicHttpParams;
-import org.apache.http.params.HttpConnectionParams;
-import org.apache.http.params.HttpParams;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
+import com.xdgames.mysterygame.Models.Account;
+import com.xdgames.mysterygame.Utils.RegistrationRequest;
 
 public class AuthenticationActivity extends ActionBarActivity {
     private static final String TAG = "AuthenticationActivity";
@@ -37,9 +21,7 @@ public class AuthenticationActivity extends ActionBarActivity {
     public final static String EXTRA_PASSWORD = "com.xdgames.mysterygame.PASSWORD";
     public final static String EXTRA_USERNAME = "com.xdgames.mysterygame.USERNAME";
 
-    private String apiEndpoint = "http://xdgames.xianheh.com/MysteryGame";
     private Account account;
-    private JSONObject registrationJSON;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,54 +51,9 @@ public class AuthenticationActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void displayToastMessage (String message) {
+    public void displayToastMessage (String message) {
         Toast toast = Toast.makeText(this, message, Toast.LENGTH_SHORT);
         toast.show();
-    }
-
-    private void createRegistrationJson () {
-        registrationJSON = new JSONObject();
-        JSONObject userJSON = new JSONObject();
-        try {
-            userJSON.put("firstname", account.getFirstName());
-            userJSON.put("lastname", account.getLastName());
-            userJSON.put("username", account.getUsername());
-            userJSON.put("password", account.getPassword());
-            userJSON.put("email", account.getEmail());
-            userJSON.put("invitation_code", account.getInvitationCode());
-            registrationJSON.put("registration", userJSON);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }
-    private void sendRegistration () {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                HttpPost httpPost = new HttpPost(apiEndpoint);
-                httpPost.setHeader("Content-Type", "application/json");
-                try {
-                    httpPost.setEntity(new StringEntity(registrationJSON.toString()));
-                    HttpParams httpParams = new BasicHttpParams();
-                    HttpConnectionParams.setConnectionTimeout(httpParams, 10* 1000);
-                    HttpConnectionParams.setSoTimeout(httpParams, 10*1000);
-                    DefaultHttpClient httpClient = new DefaultHttpClient(httpParams);
-                    HttpResponse response = httpClient.execute(httpPost);
-                }
-                catch (IOException e){
-                    e.printStackTrace();
-                }
-            }
-        }).start();
-    }
-
-    private void handleRegistrationResponse (HttpResponse response) {
-        if (response.getStatusLine().getStatusCode() == 200) {
-            displayToastMessage("Login Successed");
-        }
-        else {
-            displayToastMessage("Login Failed");
-        }
     }
 
     private boolean checkValidForm () {
@@ -170,7 +107,7 @@ public class AuthenticationActivity extends ActionBarActivity {
 //        if (!checkValidForm()) {
 //            return;
 //        }
-        createRegistrationJson();
-        sendRegistration();
+        RegistrationRequest registrationRequest = new RegistrationRequest(this);
+        registrationRequest.execute(account);
     }
 }
