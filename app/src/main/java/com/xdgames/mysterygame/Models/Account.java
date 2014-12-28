@@ -81,9 +81,7 @@ public class Account {
     }
 
     public boolean checkEmail () {
-        final String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
-                + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
-        return this.email.matches(EMAIL_PATTERN);
+        return checkEmail(this.email);
     }
 
     public boolean checkPassword () {
