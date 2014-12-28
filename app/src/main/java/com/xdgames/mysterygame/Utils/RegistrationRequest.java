@@ -10,7 +10,6 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.xdgames.mysterygame.Models.Account;
-import com.xdgames.mysterygame.UI.ProgressDialogFragment;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpPost;
