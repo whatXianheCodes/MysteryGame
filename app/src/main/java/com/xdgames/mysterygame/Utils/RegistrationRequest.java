@@ -2,6 +2,7 @@ package com.xdgames.mysterygame.Utils;
 
 import android.app.AlertDialog;
 import android.app.Fragment;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
@@ -33,6 +34,7 @@ public class RegistrationRequest extends AsyncTask <Account, Void, String>{
     private JSONObject registrationJSON;
     private String apiEndpoint = "http://xdgames.xianheh.com/MysteryGame";
     private Context context;
+    private ProgressDialog progressDialog;
 
     public RegistrationRequest(Context context) {
         this.context = context;
@@ -90,25 +92,17 @@ public class RegistrationRequest extends AsyncTask <Account, Void, String>{
     @Override
     protected void onProgressUpdate(Void... values) {
         super.onProgressUpdate(values);
-        Log.d(TAG, "testing...");
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setMessage("This is a message")
-                .setTitle("Alert")
-                .setPositiveButton("ok", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Log.d(TAG, "Ok Pressed");
-                    }
-                });
-        AlertDialog dialog = builder.create();
-        dialog.show();
+        progressDialog = ProgressDialog.show(context, "Please wait ...", "Sending request to server", true);
+        progressDialog.setCancelable(false);
 
     }
 
     @Override
     protected void onPostExecute(String s) {
         super.onPostExecute(s);
+        progressDialog.dismiss();
         Toast toast = Toast.makeText(context, s, Toast.LENGTH_SHORT);
         toast.show();
     }
+
 }

@@ -103,10 +103,9 @@ public class AuthenticationActivity extends ActionBarActivity {
 
         account = new Account (firstNameValue, lastNameValue, usernameValue,
                 passwordValue, emailValue, invitationCodeValue);
-
-//        if (!checkValidForm()) {
-//            return;
-//        }
+        if (!checkValidForm()) {
+            return;
+        }
         RegistrationRequest registrationRequest = new RegistrationRequest(this);
         registrationRequest.execute(account);
     }
