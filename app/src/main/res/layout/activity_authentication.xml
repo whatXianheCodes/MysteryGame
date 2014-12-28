@@ -17,14 +17,14 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <EditText
-            android:id="@+id/first_name"
+            android:id="@+id/registration_first_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:hint="@string/first_name_field"
             android:layout_weight="1"
             android:singleLine="true"/>
         <EditText
-            android:id="@+id/last_name"
+            android:id="@+id/registration_last_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:hint="@string/last_name_field"
@@ -40,7 +40,7 @@
         android:layout_marginTop="20dp"/>
 
     <EditText
-        android:id="@+id/username"
+        android:id="@+id/registration_username"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/username_field"
@@ -54,7 +54,7 @@
         android:layout_marginTop="20dp"/>
 
     <EditText
-        android:id="@+id/password"
+        android:id="@+id/registration_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/password_field"
@@ -69,7 +69,7 @@
         android:layout_marginTop="20dp"/>
 
     <EditText
-        android:id="@+id/confirm_password"
+        android:id="@+id/registration_confirm_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/password_field"
@@ -84,7 +84,7 @@
         android:layout_marginTop="20dp"/>
 
     <EditText
-        android:id="@+id/email"
+        android:id="@+id/registration_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/email_address_field"
@@ -98,7 +98,7 @@
         android:layout_marginTop="20dp"/>
 
     <EditText
-        android:id="@+id/invitation_code"
+        android:id="@+id/registration_invitation_code"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/invitation_code_field"

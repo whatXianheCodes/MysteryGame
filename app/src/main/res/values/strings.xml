@@ -24,6 +24,10 @@
     <string name="invalid_username_message">A username is required</string>
     <string name="title_activity_main_menu_actvity">Main Menu</string>
     <string name="title_activity_main">Main Menu</string>
-    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_login">Sign In</string>
+    <string name="login_button">Login</string>
+    <string name="login_username_email">Username or Email</string>
+    <string name="remember_me">Remember me</string>
+    <string name="login_registration">Sign Up for Mystery Game</string>
 
 </resources>

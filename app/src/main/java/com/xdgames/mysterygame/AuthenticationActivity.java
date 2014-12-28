@@ -1,6 +1,7 @@
 package com.xdgames.mysterygame;
 
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -23,10 +24,25 @@ public class AuthenticationActivity extends ActionBarActivity {
 
     private Account account;
 
+    private void getUsernameEmail () {
+        Intent intent = getIntent();
+        String usernameEmailValue = intent.getStringExtra(LoginActivity.EXTRA_USERNAME_EMAIL);
+        if (!usernameEmailValue.isEmpty()){
+            if (Account.checkEmail(usernameEmailValue)) {
+                EditText emailView = (EditText) findViewById(R.id.registration_email);
+                emailView.setText(usernameEmailValue);
+            }
+            else {
+                EditText usernameView = (EditText) findViewById(R.id.registration_username);
+                usernameView.setText(usernameEmailValue);
+            }
+        }
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_authentication);
+        getUsernameEmail();
     }
 
     @Override
@@ -57,7 +73,7 @@ public class AuthenticationActivity extends ActionBarActivity {
     }
 
     private boolean checkValidForm () {
-        EditText passwordConfirmView = (EditText)findViewById(R.id.confirm_password);
+        EditText passwordConfirmView = (EditText)findViewById(R.id.registration_confirm_password);
         String passwordConfirmValue = passwordConfirmView.getText().toString();
         if (!account.checkName()) {
             displayToastMessage(getResources().getString(R.string.invalid_name_message));
@@ -88,17 +104,17 @@ public class AuthenticationActivity extends ActionBarActivity {
         }
     }
     public void submitForm (View view) {
-        EditText invitationCodeView = (EditText)findViewById(R.id.invitation_code);
+        EditText invitationCodeView = (EditText)findViewById(R.id.registration_invitation_code);
         String invitationCodeValue = invitationCodeView.getText().toString();
-        EditText firstNameView = (EditText)findViewById(R.id.first_name);
+        EditText firstNameView = (EditText)findViewById(R.id.registration_first_name);
         String firstNameValue = firstNameView.getText().toString();
-        EditText lastNameView = (EditText) findViewById(R.id.last_name);
+        EditText lastNameView = (EditText) findViewById(R.id.registration_last_name);
         String lastNameValue =  lastNameView.getText().toString();
-        EditText emailView = (EditText)findViewById(R.id.email);
+        EditText emailView = (EditText)findViewById(R.id.registration_email);
         String emailValue = emailView.getText().toString();
-        EditText passwordView = (EditText)findViewById(R.id.password);
+        EditText passwordView = (EditText)findViewById(R.id.registration_password);
         String passwordValue = passwordView.getText().toString();
-        EditText usernameView = (EditText)findViewById(R.id.username);
+        EditText usernameView = (EditText)findViewById(R.id.registration_username);
         String usernameValue = usernameView.getText().toString();
 
         account = new Account (firstNameValue, lastNameValue, usernameValue,

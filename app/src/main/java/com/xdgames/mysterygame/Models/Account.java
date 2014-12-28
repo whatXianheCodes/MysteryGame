@@ -97,4 +97,10 @@ public class Account {
     public boolean checkUsername () {
         return (this.username.length() != 0);
     }
+
+    public static boolean checkEmail (String email) {
+        final String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+                + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+        return email.matches(EMAIL_PATTERN);
+    }
 }
