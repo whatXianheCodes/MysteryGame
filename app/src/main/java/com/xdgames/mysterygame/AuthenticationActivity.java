@@ -24,7 +24,7 @@ public class AuthenticationActivity extends ActionBarActivity {
 
     private Account account;
 
-    private void getUsernameEmail () {
+    private void setDefaultValue () {
         Intent intent = getIntent();
         String usernameEmailValue = intent.getStringExtra(LoginActivity.EXTRA_USERNAME_EMAIL);
         if (!usernameEmailValue.isEmpty()){
@@ -42,7 +42,7 @@ public class AuthenticationActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_authentication);
-        getUsernameEmail();
+        setDefaultValue();
     }
 
     @Override
@@ -73,8 +73,7 @@ public class AuthenticationActivity extends ActionBarActivity {
     }
 
     private boolean checkValidForm () {
-        EditText passwordConfirmView = (EditText)findViewById(R.id.registration_confirm_password);
-        String passwordConfirmValue = passwordConfirmView.getText().toString();
+        String passwordConfirmValue = ((EditText)findViewById(R.id.registration_confirm_password)).getText().toString();
         if (!account.checkName()) {
             displayToastMessage(getResources().getString(R.string.invalid_name_message));
             return false;
@@ -104,18 +103,12 @@ public class AuthenticationActivity extends ActionBarActivity {
         }
     }
     public void submitForm (View view) {
-        EditText invitationCodeView = (EditText)findViewById(R.id.registration_invitation_code);
-        String invitationCodeValue = invitationCodeView.getText().toString();
-        EditText firstNameView = (EditText)findViewById(R.id.registration_first_name);
-        String firstNameValue = firstNameView.getText().toString();
-        EditText lastNameView = (EditText) findViewById(R.id.registration_last_name);
-        String lastNameValue =  lastNameView.getText().toString();
-        EditText emailView = (EditText)findViewById(R.id.registration_email);
-        String emailValue = emailView.getText().toString();
-        EditText passwordView = (EditText)findViewById(R.id.registration_password);
-        String passwordValue = passwordView.getText().toString();
-        EditText usernameView = (EditText)findViewById(R.id.registration_username);
-        String usernameValue = usernameView.getText().toString();
+        String invitationCodeValue = ((EditText)findViewById(R.id.registration_invitation_code)).getText().toString();
+        String firstNameValue = ((EditText)findViewById(R.id.registration_first_name)).getText().toString();
+        String lastNameValue =  ((EditText) findViewById(R.id.registration_last_name)).getText().toString();
+        String emailValue = ((EditText)findViewById(R.id.registration_email)).getText().toString();
+        String passwordValue = ((EditText)findViewById(R.id.registration_password)).getText().toString();
+        String usernameValue = ((EditText)findViewById(R.id.registration_username)).getText().toString();
 
         account = new Account (firstNameValue, lastNameValue, usernameValue,
                 passwordValue, emailValue, invitationCodeValue);
