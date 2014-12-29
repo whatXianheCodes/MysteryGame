@@ -1,10 +1,8 @@
 package com.xdgames.mysterygame.Utils;
 
-import android.app.AlertDialog;
-import android.app.Fragment;
+import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.Context;
-import android.content.DialogInterface;
+import android.content.pm.ActivityInfo;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
@@ -32,11 +30,11 @@ public class RegistrationRequest extends AsyncTask <Account, Void, String>{
 
     private JSONObject registrationJSON;
     private String apiEndpoint = "http://xdgames.xianheh.com/MysteryGame";
-    private Context context;
+    private Activity activity;
     private ProgressDialog progressDialog;
 
-    public RegistrationRequest(Context context) {
-        this.context = context;
+    public RegistrationRequest(Activity activity) {
+        this.activity = activity;
     }
 
 
@@ -90,8 +88,9 @@ public class RegistrationRequest extends AsyncTask <Account, Void, String>{
 
     @Override
     protected void onProgressUpdate(Void... values) {
+        activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         super.onProgressUpdate(values);
-        progressDialog = ProgressDialog.show(context, "Please wait ...", "Sending request to server", true);
+        progressDialog = ProgressDialog.show(activity, "Please wait ...", "Sending request to server", true);
         progressDialog.setCancelable(false);
 
     }
@@ -100,7 +99,8 @@ public class RegistrationRequest extends AsyncTask <Account, Void, String>{
     protected void onPostExecute(String s) {
         super.onPostExecute(s);
         progressDialog.dismiss();
-        Toast toast = Toast.makeText(context, s, Toast.LENGTH_SHORT);
+        activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
+        Toast toast = Toast.makeText(activity, s, Toast.LENGTH_SHORT);
         toast.show();
     }
 
