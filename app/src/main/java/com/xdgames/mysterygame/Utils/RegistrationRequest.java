@@ -29,7 +29,7 @@ public class RegistrationRequest extends AsyncTask <Account, Void, String>{
     private static final String TAG = "RegistrationRequest";
 
     private JSONObject registrationJSON;
-    private String apiEndpoint = "http://xdgames.xianheh.com/MysteryGame";
+    private String apiEndpoint = "http://xdgames.xianheh.com/MysteryGame/register";
     private Activity activity;
     private ProgressDialog progressDialog;
 
@@ -56,11 +56,9 @@ public class RegistrationRequest extends AsyncTask <Account, Void, String>{
 
     private String handleRegistrationResponse (HttpResponse response) {
         if (response.getStatusLine().getStatusCode() == 200) {
-            //displayToastMessage("Login Successed");
             return "You have successfully created an account";
         }
         else {
-            //displayToastMessage("Login Failed");
             return "You have failed to create an account.";
         }
     }

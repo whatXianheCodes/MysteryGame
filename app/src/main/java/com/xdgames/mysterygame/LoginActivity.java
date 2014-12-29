@@ -12,6 +12,9 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
 
+import com.xdgames.mysterygame.Models.Account;
+import com.xdgames.mysterygame.Utils.LoginRequest;
+
 
 public class LoginActivity extends ActionBarActivity {
 
@@ -20,18 +23,17 @@ public class LoginActivity extends ActionBarActivity {
     private final String PREFERENCE_CREDIENTIAL = "com.xdgames.mysterygame.credential";
     private final String PASSWORD_VALUE_CREDENTIAL = "com.xdgame.mysterygame.password";
 
-    private String userNameValue;
+    private String userNameEmailValue;
     private String passwordValue;
     SharedPreferences setting;
 
     private void setDefaultValue () {
-        userNameValue = setting.getString(EXTRA_USERNAME_EMAIL, "");
+        userNameEmailValue = setting.getString(EXTRA_USERNAME_EMAIL, "");
         passwordValue = setting.getString(PASSWORD_VALUE_CREDENTIAL, "");
-        userNameValue = setting.getString(EXTRA_USERNAME_EMAIL, "");
-        passwordValue = setting.getString(PASSWORD_VALUE_CREDENTIAL, "");
-        if (!userNameValue.isEmpty()) {
+
+        if (!userNameEmailValue.isEmpty()) {
             EditText userNameView = (EditText) findViewById(R.id.login_username_email);
-            userNameView.setText(userNameValue);
+            userNameView.setText(userNameEmailValue);
         }
         if(!passwordValue.isEmpty()){
             EditText passwordView = (EditText) findViewById(R.id.login_password);
@@ -71,10 +73,17 @@ public class LoginActivity extends ActionBarActivity {
     }
 
     private void handleRememberme() {
+        if (userNameEmailValue.isEmpty()) {
+            userNameEmailValue = ((EditText)findViewById(R.id.login_username_email)).getText().toString();
+
+        }
+        if(passwordValue.isEmpty()) {
+            passwordValue = ((EditText)findViewById(R.id.login_password)).getText().toString();
+        }
         boolean rememberMeValue = ((CheckBox) findViewById(R.id.login_remember_me_checkbox)).isChecked();
         if(rememberMeValue){
             SharedPreferences.Editor editor = setting.edit();
-            editor.putString(EXTRA_USERNAME_EMAIL, userNameValue);
+            editor.putString(EXTRA_USERNAME_EMAIL, userNameEmailValue);
             editor.putString(PASSWORD_VALUE_CREDENTIAL, passwordValue);
             editor.apply();
         }
@@ -93,14 +102,23 @@ public class LoginActivity extends ActionBarActivity {
         startActivity(intent);
     }
 
-    public void loginRequest (View view) {
-        if (userNameValue.isEmpty()) {
-            userNameValue = ((EditText)findViewById(R.id.login_username_email)).getText().toString();
 
-        }
-        if(passwordValue.isEmpty()) {
-            passwordValue = ((EditText)findViewById(R.id.login_password)).getText().toString();
-        }
+    public void loginRequest (View view) {
+         userNameEmailValue = ((EditText)findViewById(R.id.login_username_email)).getText().toString();
+         passwordValue = ((EditText)findViewById(R.id.login_password)).getText().toString();
+
         handleRememberme();
+        if (userNameEmailValue.isEmpty() || passwordValue.isEmpty()) {
+            return;
+        }
+
+        LoginRequest registrationRequest = new LoginRequest(this);
+        if (Account.checkEmail(userNameEmailValue)) {
+            // first value is username, second value is email, third value is password
+            registrationRequest.execute("",userNameEmailValue, passwordValue);
+        }
+        else {
+            registrationRequest.execute(userNameEmailValue,"", passwordValue);
+        }
     }
 }
