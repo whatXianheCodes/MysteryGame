@@ -21,7 +21,8 @@ public class LoginActivity extends ActionBarActivity {
     private static final String TAG = "LoginActivity";
     public final static String EXTRA_USERNAME_EMAIL = "com.xdgames.mysterygame.login_username_email";
     private final String PREFERENCE_CREDIENTIAL = "com.xdgames.mysterygame.credential";
-    private final String PASSWORD_VALUE_CREDENTIAL = "com.xdgame.mysterygame.password";
+    private final String PASSWORD_VALUE_CREDENTIAL = "com.xdgames.mysterygame.password";
+    private final String REMEMBER_ME_CREDIENTIAL = "com.xdgames.mysterygame.remember_me";
 
     private String userNameEmailValue;
     private String passwordValue;
@@ -30,6 +31,9 @@ public class LoginActivity extends ActionBarActivity {
     private void setDefaultValue () {
         userNameEmailValue = setting.getString(EXTRA_USERNAME_EMAIL, "");
         passwordValue = setting.getString(PASSWORD_VALUE_CREDENTIAL, "");
+        Boolean rememberMeValue = setting.getBoolean(REMEMBER_ME_CREDIENTIAL, false);
+        CheckBox rememberMeView = (CheckBox) findViewById(R.id.login_remember_me_checkbox);
+        rememberMeView.setChecked(rememberMeValue);
 
         if (!userNameEmailValue.isEmpty()) {
             EditText userNameView = (EditText) findViewById(R.id.login_username_email);
@@ -73,22 +77,15 @@ public class LoginActivity extends ActionBarActivity {
     }
 
     private void handleRememberme() {
-        if (userNameEmailValue.isEmpty()) {
-            userNameEmailValue = ((EditText)findViewById(R.id.login_username_email)).getText().toString();
-
-        }
-        if(passwordValue.isEmpty()) {
-            passwordValue = ((EditText)findViewById(R.id.login_password)).getText().toString();
-        }
         boolean rememberMeValue = ((CheckBox) findViewById(R.id.login_remember_me_checkbox)).isChecked();
+        SharedPreferences.Editor editor = setting.edit();
+        editor.putBoolean(REMEMBER_ME_CREDIENTIAL, rememberMeValue);
         if(rememberMeValue){
-            SharedPreferences.Editor editor = setting.edit();
             editor.putString(EXTRA_USERNAME_EMAIL, userNameEmailValue);
             editor.putString(PASSWORD_VALUE_CREDENTIAL, passwordValue);
             editor.apply();
         }
         else {
-            SharedPreferences.Editor editor = setting.edit();
             editor.putString(EXTRA_USERNAME_EMAIL, "");
             editor.putString(PASSWORD_VALUE_CREDENTIAL, "");
             editor.apply();
